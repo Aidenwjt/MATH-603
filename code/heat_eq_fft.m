@@ -6,22 +6,26 @@ dx = L/n; % spatial step-size
 x = (-L/2:dx:L/2 - dx); % spatial domain
 
 zeta = (2*pi/L)*(-(n/2):(n/2)-1);
-zeta = fftshift(zeta,1);
+zeta = fftshift(zeta,1)';
 
 u0 = 0*x;
+u0
 u0((L/2 - L/5)/dx:dx:(L/2 + L/5)/dx) = 1;
-%plot(x,u0)
+u0_hat = fft(u0');
 
 dt = 0.1;
 t = (0.0:dt:10.0);
 
-[t,u_hat] = ode45(@(t,u_hat) 2*pi*(zeta.^2)'.*u_hat,t,fft_(u0,zeros(1,n),n,exp((2*pi*1i)/n))');
+[t,u_hat] = ode45(@(t,u_hat)rhsHeat(t,u_hat,zeta),t,u0_hat);
 
+u = zeros(length(t),n);
 for k = 1:length(t)
-    u(k,:) = (1/n)*fft_(u_hat(k,:),zeros(1,n),n,exp(-(2*pi*1i)/n))';
+    u(k,:) = ifft(u_hat(k,:));
 end
+u
 
-plot(u)
+surf(x,t,u)
+
 %%% Functions
 function F = fft_(f,F,n,w)
     if n == 1
@@ -39,4 +43,8 @@ function F = fft_(f,F,n,w)
             F(k) = F_even(mod((k-1),n/2)+1) + (w^(k-1))*F_odd(mod((k-1),n/2)+1);
         end
     end
+end
+
+function du_hat_dt = rhsHeat(t,u_hat,zeta)
+    du_hat_dt = -(zeta.^2).*u_hat;
 end
