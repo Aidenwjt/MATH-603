@@ -88,6 +88,7 @@
 	\end{equation*}
 \end{frame}
 \begin{frame}
+	\frametitle{Matrix Form}
 	Letting $\xi = e^{i2\pi/n}$, the DFT and IDFT can be written as
 	\begin{equation*}
 		\begin{bmatrix}
@@ -292,14 +293,14 @@
 \end{frame}
 \begin{frame}
 	\frametitle{Discretization}
-	Given $n \in \mathbb{N}$,
+	Choosing $n = 2^{\ell}$, where $\ell \in \mathbb{Z}^+$, and taking
 	\begin{equation*}
 		\begin{cases}
 			\omega_m = 2\pi m/n, & m = 0,1,\dots,n-1, \\
 			x_k = x_0 + k\Delta x, & k = 0,1,\dots,n-1,
 		\end{cases}
 	\end{equation*}
-	where $x_0 = 0$ and $\Delta x = L/(n-1)$, then we have
+	where $x_0 = 0$ and $\Delta x = L/(n-1)$, gives us
 	\begin{equation*}
 		\begin{bmatrix}
 			\frac{d}{dt}u^{\#}(t,\omega_0) \\
@@ -375,6 +376,7 @@
 
 \begin{frame}
 	\begin{center}
+		\url{https://github.com/Aidenwjt/MATH-603} \\
 		Thank you!
 	\end{center}
 \end{frame}
