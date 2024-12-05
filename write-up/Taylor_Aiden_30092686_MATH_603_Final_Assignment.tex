@@ -104,7 +104,7 @@ we can define the Discrete Fourier Transform (DFT) as
 	\end{equation*}
 where the discretization of the function can be recovered as
 	\begin{equation*}
-		f_{k} = \frac{1}{n}\sum_{m=0}^{n-1}{f_{k}^{\#}e^{i\omega_mk}}, \quad k = 0,1,\dots,n-1,
+		f_{k} = \frac{1}{n}\sum_{m=0}^{n-1}{f_{m}^{\#}e^{i\omega_mk}}, \quad k = 0,1,\dots,n-1,
 	\end{equation*}
 which we call the Inverse DFT (IDFT). Letting $\xi = e^{i 2\pi/n}$, we can instead represent the DFT and
 IDFT respectively as the following two matrix-vector multiplications,
@@ -343,34 +343,34 @@ which has the well known solution
 where $\hat{u_0}$ is the Fourier Transform of the intital-value function $u_0$.
 Now, to solve this IVP numerically, we use the discretization of the frequency and spatial domains
 described in (\ref{eq:5}), which gives us a system of ODEs,
-\begin{equation*}
-	\begin{bmatrix}
-		\frac{d}{dt}\hat{u}(t,\omega_0) \\
-		\vdots \\
-		\frac{d}{dt}\hat{u}(t,\omega_{n-1})
-	\end{bmatrix}
-	=
-	\begin{bmatrix}
-		-\omega_0^2\hat{u}(t,\omega_0) \\
-		\vdots \\
-		-\omega_{n-1}^2\hat{u}(t,\omega_{n-1})
-	\end{bmatrix},
-\end{equation*}
+	\begin{equation*}
+		\begin{bmatrix}
+			\frac{d}{dt}u^{\#}(t,\omega_0) \\
+			\vdots \\
+			\frac{d}{dt}u^{\#}(t,\omega_{n-1})
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			-\omega_0^2u^{\#}(t,\omega_0) \\
+			\vdots \\
+			-\omega_{n-1}^2u^{\#}(t,\omega_{n-1})
+		\end{bmatrix},
+	\end{equation*}
 which in turn has a system of solutions,
-\begin{equation*}
-	\begin{bmatrix}
-		\hat{u}(t,\omega_0) \\
-		\vdots \\
-		\hat{u}(t,\omega_{n-1})
-	\end{bmatrix}
-	=
-	\begin{bmatrix}
-		\hat{u_0}(t,\omega_0)e^{-\omega_0^2t} \\
-		\vdots \\
-		\hat{u_0}(t,\omega_{n-1})e^{-\omega_{n-1}^2t} \\
-	\end{bmatrix},
-\end{equation*}
-for each step in time, $t$. This gives us a vector of Fourier coefficients at each time step, $t$, and
+	\begin{equation*}
+		\begin{bmatrix}
+			u^{\#}(t,\omega_0) \\
+			\vdots \\
+			u^{\#}(t,\omega_{n-1})
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			u_0^{\#}(t,\omega_0)e^{-\omega_0^2t} \\
+			\vdots \\
+			u_0^{\#}(t,\omega_{n-1})e^{-\omega_{n-1}^2t} \\
+		\end{bmatrix},
+	\end{equation*}
+for each step in time, $t$. This gives us a vector of discrete Fourier coefficients at each time step, $t$, and
 performing the Inverse FFT (IFFT) on each of these Fourier coefficient vectors recovers the approximation of the unknown function, $u$,
 at each time step, $t$, as desired.
 To illustrate this numerical process I wrote a Matlab program that implements the following IVP,
